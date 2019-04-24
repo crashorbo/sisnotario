@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block css %}
+<!-- Date picker plugins css -->
+  <link href="{% static "assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block contenido %}
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Lista de Personas<button class="float-right btn btn-primary" data-toggle="modal" data-target="#responsive-modal" id="registro-paciente">Registrar</button></h4>
+    <div class="table-responsive m-t-40">
+      <table id="myTable" class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Nro Documento</th>
+            <th>Expedido</th>
+            <th>Telefono</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for persona in personas %}
+            <tr>
+              <td>{{ persona.nombres|add:" "|add:persona.apellido_pat|add:" "|add:persona.apellido_mat }}</td>
+              <td>{{ persona.nro_documento}}</td>
+              <td>{{ persona.expedido }}</td>
+              <td>{{ persona.nacionalidad }}</td>
+              <td class="text-right">
+                  <button data-url={% url 'persona-editar' pk=persona.id %} class="btn editar-persona btn-simple btn-warning btn-xs"><i class="fa fa-edit"></i></button>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<!-- This is data table -->
+<script src="{% static "assets/plugins/datatables/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "assets/paginas/persona/persona-index.js" %}"></script>
+{% endblock %}

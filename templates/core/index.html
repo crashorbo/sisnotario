@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row p-t-30">
+    <div class="col-lg-4 col-md-6">
+        <div class="card ">
+            <div class="row">
+                <div class="col-12">
+                    <div class="social-widget">
+                        <div class="soc-header background-tema">
+                            <i class="fa fa-clipboard"></i>
+                        </div>
+                        <div class="soc-content">
+                            <div class="col-12 text-center">
+                                <a href="{% url 'tramite-index' %}" class="btn btn-primary">
+                                    <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div class="col-lg-4 col-md-6">
+        <div class="card ">
+            <div class="row">
+                <div class="col-12">
+                    <div class="social-widget">
+                        <div class="soc-header background-tema">
+                            <i class="ti-user"></i>
+                        </div>
+                        <div class="soc-content">
+                            <div class="col-12 text-center">
+                                <a href="{% url 'persona-index' %}" class="btn btn-primary">
+                                    <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div class="col-lg-4 col-md-6">
+        <div class="card ">
+            <div class="row">
+                <div class="col-12">
+                    <div class="social-widget">
+                        <div class="soc-header background-tema">
+                            <i class="ti-settings"></i>
+                        </div>
+                        <div class="soc-content">
+                            <div class="col-12 text-center">
+                                <a href="#" class="btn btn-primary">
+                                    <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>       
+</div>
+<div class="row p-t-20">
+  <div class="col-sm-12">
+  <h4 class="text-center"><img src="{% static "assets/images/logonotario.png" %}" /></h4>
+  </div>
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->
+{% endblock %}

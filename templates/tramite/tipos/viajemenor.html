@@ -1,0 +1,108 @@
+ {% load tramite_tags %}
+
+ <div class="row">
+  <div class="col-lg-5 col-xlg-4 col-md-6">
+    <div class="ribbon-wrapper card">
+      <div class="ribbon ribbon-primary">Datos del Tramite</div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h6><strong>{{ tramite.tipo_tramite|tipo_tramite }}</strong></h6>
+        </div>
+      </div>
+      <form id="form-editar" action="" method="post" class="form-material">
+        <div class="row">
+          <div class="col-md-3">
+            <small>Nro de Tramite</small>
+            <h6>{{ tramite.numero }}</h6>
+          </div>
+          <div class="col-md-6">
+            <small>Fecha</small>
+            <h6>{{ tramite.fecha_registro|fechaupper }}</h6>
+          </div>
+          <div class="col-md-3">
+            <small>Hora</small>
+            <h6>{{ tramite.hora_registro }}</h6>
+          </div>
+        </div>
+        {% csrf_token %}
+        <div class="hide">
+          {{ form.tipo_tramite}}
+          {{ form.titulo }}
+          {{ form.fecha_documento }}
+          {{ form.pagina_inicio }}
+          {{ form.pagina_fin }}   
+        </div>
+        <div class="row">
+          <div class="col-md-12 m-t-10">
+            <div class="text-right">
+              {% if tramite.estado %}
+              <a onclick="imprimirlista(event, this);" href="{% url 'reporte_tramite' id=tramite.id %}" class="btn btn-secondary"><span class="btn-label"><i class="fa fa-print"></i></span>Imprimir</a> 
+              {% endif %}
+              <button id="guardarcfyr" class="btn btn-primary" type="submit">{% if tramite.estado %}<span class="btn-label"><i class="fa fa-save"></i></span>Guardar{% else %}Terminar{% endif %}</button>
+              <a class="btn btn-info" href="{% url 'tramite-index' %}"><span class="btn-label"><i class="fa fa-reply"></i></span>Volver</a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="ribbon-wrapper card">
+      <div class="ribbon ribbon-primary">Firmante</div>
+      <form id="form-tramitante" action="{% url 'tramitepersona-registrar' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group hide">
+          {{ formviaje.tramite}}
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            {{ formviaje.persona}}
+          </div>
+        </div>
+        <div class="row m-t-20">          
+          <div class="col-md-6 text-center">
+            {{ formviaje.tipo }}
+            <label for="id_tipo">Menor</label>
+          </div>
+        </div>
+        <div class="row m-t-20">
+          <div class="col-md-6">
+            <button class="btn btn-success btn-block" id="registro-persona">Registrar Persona <i class="mdi mdi-plus"></i></button>
+          </div>
+          <div class="col-md-6">
+            <button type="submit" class="btn btn-primary btn-block">Agregar Firmante <i class="mdi mdi-arrow-right"></i></button> 
+          </div>
+        </div>
+      </form>      
+    </div>
+  </div>
+  <div class="col-lg-7 col-xlg-8 col-md-6">
+    <div class="ribbon-wrapper card">
+      <div class="ribbon ribbon-primary">Lista de Firmantes</div>
+      <div id="tramitantes">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Nro Documento</th>
+              <th>Telefono</th>
+              <th>Firma</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in tramite.tramiteviaje_set.all %}
+            <tr>
+              <td><a href="#" data-url={% url 'persona-editar' pk=item.persona.id %} class="editar-persona">{{ item.persona.nombres|add:" "|add:item.persona.apellido_pat|add:" "|add:item.persona.apellido_mat }}</td></a>
+              <td>{{ item.persona.nro_documento|concatstring:" "}}{{ item.persona.expedido|expedido }}</td>
+              <td>{{ item.persona.telefono }}</td>
+              <td>{{ item.tipo|firma }}</td>
+              <td><form action="{% url 'tramitepersona_eliminar' pk=item.id %}" method="post" class="form-eliminar">{% csrf_token %}
+              <button type="submit" class="btn btn-xs btn-danger" data-toggle="tooltip" data-original-title="Eliminar"><i class="fa fa-close"></i></button></form></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ </div>
+
