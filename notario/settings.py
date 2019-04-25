@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '8e0m19#9ffp7o=ylnwrfi^2kz8com9shq79=z#-9=pi0_u*i8z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost', 'sisnotario.com']
 
 
 # Application definition
@@ -129,10 +129,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/staticfiles/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = '/media/'
+ADMIN_MEDIA_PREFIX = '/media/admin/'
+
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
+TEMPLATE_LOADERS = (
+'django.template.loaders.filesystem.Loader',
+'django.template.loaders.app_directories.Loader',)
+
+SITE_ID = 1
