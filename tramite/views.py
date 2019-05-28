@@ -70,7 +70,9 @@ class TramiteEditar(UpdateView):
     return context
 
   def form_valid(self, form):
+    model = self.model
     model = form.save(commit=False)
+    model.usuario = self.request.user
     hoy = datetime.now()
     if not model.estado:
       try:
