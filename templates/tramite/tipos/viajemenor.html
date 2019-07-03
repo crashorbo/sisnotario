@@ -1,7 +1,7 @@
  {% load tramite_tags %}
 
  <div class="row">
-  <div class="col-lg-5 col-xlg-4 col-md-6">
+  <div class="col-lg-5 col-xlg-4 col-md-6 p-r-0">
     <div class="ribbon-wrapper card">
       <div class="ribbon ribbon-primary">Datos del Tramite</div>
       <div class="row">
@@ -9,7 +9,17 @@
           <h6><strong>{{ tramite.tipo_tramite|tipo_tramite }}</strong></h6>
         </div>
       </div>
-      <form id="form-editar" action="" method="post" class="form-material">
+      {% if form.errors %}
+      <div class="alert alert-danger">
+          {{ form.non_field_errors }}
+          <ul>
+              {% for field in form %}
+                  {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+              {% endfor %}
+          </ul>
+      </div>
+      {% endif %}
+      <form id="form-editar" action="{% url "tramite-editar" pk=tramite.id %}" method="post">
         <div class="row">
           <div class="col-md-3">
             <small>Nro de Tramite</small>
@@ -24,19 +34,25 @@
             <h6>{{ tramite.hora_registro }}</h6>
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-12">
+            <small>Formularios:</small>
+            <div class="tags-default">{{ form.formularios }}</div>
+          </div>
+        </div>
         {% csrf_token %}
         <div class="hide">
           {{ form.tipo_tramite}}
           {{ form.titulo }}
-          {{ form.fecha_documento }}
-          {{ form.pagina_inicio }}
-          {{ form.pagina_fin }}   
+          {{ form.fecha_documento }} 
+          {{ form.parte_aux }}
+          {{ form.hora_registro }}
         </div>
         <div class="row">
           <div class="col-md-12 m-t-10">
             <div class="text-right">
               {% if tramite.estado %}
-              <a onclick="imprimirlista(event, this);" href="{% url 'reporte_tramite' id=tramite.id %}" class="btn btn-secondary"><span class="btn-label"><i class="fa fa-print"></i></span>Imprimir</a> 
+              <a onclick="imprimirlista(event, this);" href="{% url 'reporte_viaje' id=tramite.id %}" class="btn btn-secondary"><span class="btn-label"><i class="fa fa-print"></i></span>Imprimir</a> 
               {% endif %}
               <button id="guardarcfyr" class="btn btn-primary" type="submit">{% if tramite.estado %}<span class="btn-label"><i class="fa fa-save"></i></span>Guardar{% else %}Terminar{% endif %}</button>
               <a class="btn btn-info" href="{% url 'tramite-index' %}"><span class="btn-label"><i class="fa fa-reply"></i></span>Volver</a>
@@ -47,7 +63,7 @@
     </div>
     <div class="ribbon-wrapper card">
       <div class="ribbon ribbon-primary">Firmante</div>
-      <form id="form-tramitante" action="{% url 'tramitepersona-registrar' %}" method="post">
+      <form id="form-tramitante" action="{% url 'tramiteviaje-registrar' %}" method="post">
         {% csrf_token %}
         <div class="form-group hide">
           {{ formviaje.tramite}}
@@ -57,10 +73,73 @@
             {{ formviaje.persona}}
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-12 mayor">
+            <small>Lugar de Trabajo</small>
+            {{ formviaje.lugar_trabajo }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 menor hide">
+            <div class="row">
+              <div class="col-md-12">
+                <small>Certificado Nacimiento</small>
+                {{ formviaje.certificado_nacimiento }}
+              </div>
+              
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <small>Destino</small>
+                {{ formviaje.destino }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <small>Motivo de Viaje</small>
+                {{ formviaje.motivo_viaje }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 menor hide">
+            <div class="row">
+              <div class="col-md-12">
+                <small>Residencia del Viaje</small>
+                {{ formviaje.residencia_viaje }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <small>Tiempo de Ausencia</small>
+                {{ formviaje.tiempo_ausencia }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <small>Fecha de Retorno</small>
+                {{ formviaje.fecha_retorno }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 menor hide">
+            <small>Objeto de Viaje</small>
+            {{ formviaje.objeto_viaje}}
+          </div>
+        </div>
         <div class="row m-t-20">          
-          <div class="col-md-6 text-center">
+          <div class="col-md-4 text-center">
             {{ formviaje.tipo }}
             <label for="id_tipo">Menor</label>
+          </div>
+          <div class="col-md-4 text-center">
+            {{ formviaje.firma }}
+            <label for="id_firma">Firma</label>
+          </div>
+          <div class="col-md-4 text-center">
+            {{ formviaje.acompanante }}
+            <label for="id_acompanante">Acompañante</label>
           </div>
         </div>
         <div class="row m-t-20">
@@ -78,7 +157,7 @@
     <div class="ribbon-wrapper card">
       <div class="ribbon ribbon-primary">Lista de Firmantes</div>
       <div id="tramitantes">
-        <table class="table table-hover">
+        <table class="table table-hover table-sm">
           <thead>
             <tr>
               <th>Nombre</th>
@@ -94,8 +173,8 @@
               <td><a href="#" data-url={% url 'persona-editar' pk=item.persona.id %} class="editar-persona">{{ item.persona.nombres|add:" "|add:item.persona.apellido_pat|add:" "|add:item.persona.apellido_mat }}</td></a>
               <td>{{ item.persona.nro_documento|concatstring:" "}}{{ item.persona.expedido|expedido }}</td>
               <td>{{ item.persona.telefono }}</td>
-              <td>{{ item.tipo|firma }}</td>
-              <td><form action="{% url 'tramitepersona_eliminar' pk=item.id %}" method="post" class="form-eliminar">{% csrf_token %}
+              <td>{{ item.firma|firma }}</td>
+              <td><form action="{% url 'tramiteviaje_eliminar' pk=item.id %}" method="post" class="form-eliminar">{% csrf_token %}
               <button type="submit" class="btn btn-xs btn-danger" data-toggle="tooltip" data-original-title="Eliminar"><i class="fa fa-close"></i></button></form></td>
             </tr>
             {% endfor %}

@@ -38,7 +38,7 @@ class Persona(models.Model):
   nro_documento = models.CharField(max_length=50, unique=True)
   estado_civil = models.IntegerField(default=1, choices=ESTADO_CIVIL)
   genero = models.IntegerField(default=1, choices=GENERO_CHOICES)
-  nacionalidad = models.CharField(max_length=100)
+  nacionalidad = models.CharField(max_length=100, default="BOLIVIANA")
   telefono = models.CharField(max_length=50, default='', blank=True)
   email = models.EmailField(max_length=200, blank=True)
   fecha_nacimiento = models.DateField(default=timezone.now)

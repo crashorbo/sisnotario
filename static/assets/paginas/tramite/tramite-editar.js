@@ -7,18 +7,17 @@ $(document).ready(function(){
     language: "es",
   });
 
-  $('.select2').select2({
+  $('#id_persona').select2({
     language: 'es',
-    placeholder: "Seleccionar Persona",
     ajax: {
-      url: Urls.persona_autocomplete(),
+      url: "/persona/persona-autocomplete/",
       dataType: 'json',
       delay: 250,
       data: function(params) {
-        return {
-          q: params.term, // search term
-          page: params.page
-        };
+          return {
+              q: params.term, // search term
+              page: params.page
+          };
       },
       processResults: function(data, params) {
           // parse the results into the format expected by Select2
@@ -42,31 +41,6 @@ $(document).ready(function(){
     
   });
   
-  document.addEventListener('keypress', function(evt) {
-
-    // Si el evento NO es una tecla Enter
-    if (evt.key !== 'Enter') {
-      return;
-    }
-    
-    let element = evt.target;
-  
-    // Si el evento NO fue lanzado por un elemento con class "focusNext"
-    if (!element.classList.contains('focusNext')) {
-      return;
-    }
-  
-    // AQUI logica para encontrar el siguiente
-    let tabIndex = element.tabIndex + 1;
-    var next = document.querySelector('[tabindex="'+tabIndex+'"]');
-  
-    // Si encontramos un elemento
-    if (next) {
-      next.focus();
-      event.preventDefault();
-    }
-  });
-
   $('#form-tramitante').on('submit', function (e) {
     e.preventDefault();
     var $formData = $(this).serialize();
@@ -83,7 +57,10 @@ $(document).ready(function(){
         data: $formData,
         success: function(data){          
           $("#tramitantes").html(data);
-          $(".select2").val("").trigger("change");
+          $('#form-tramitante')[0].reset();
+          $("#id_persona").val("").trigger("change");
+          $(".menor").hide();
+          $(".mayor").show();
         },
         error: function(xhr,errmsg,err) {
           // Show an error
@@ -176,8 +153,13 @@ function imprimirlista(e, obj)
   window.open(this_url,"reporte","height=500,width=700,status=no, toolbar=no,menubar=no,location=no,scrollbars=yes");
 }
 
-$("#form-editar").on('submit', function(e) {
-  e.preventDefault();
-  $('#guardarcfyr').attr('disabled', true);
-  this.submit(); 
+$("#id_tipo").on('click', function(){
+  if($(this).is(":checked")){
+    $(".menor").show();
+    $(".mayor").hide();
+  }
+  else{
+    $(".menor").hide();
+    $(".mayor").show();
+  }
 });

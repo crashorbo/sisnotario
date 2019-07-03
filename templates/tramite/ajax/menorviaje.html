@@ -11,13 +11,13 @@
     </tr>
   </thead>
   <tbody>
-    {% for item in tramite.tramitepersona_set.all %}
+    {% for item in tramite.tramiteviaje_set.all %}
     <tr>
       <td><a href="#" data-url={% url 'persona-editar' pk=item.persona.id %} class="editar-persona">{{ item.persona.nombres|add:" "|add:item.persona.apellido_pat|add:" "|add:item.persona.apellido_mat }}</td></a>
       <td>{{ item.persona.nro_documento|concatstring:" "}}{{ item.persona.expedido|expedido }}</td>
       <td>{{ item.persona.telefono }}</td>
       <td>{{ item.firma|firma }}</td>
-      <td><form action="{% url 'tramitepersona_eliminar' pk=item.id %}" method="post" class="form-eliminar">{% csrf_token %}<button type="submit" class="btn btn-xs btn-danger" data-toggle="tooltip" data-original-title="Eliminar"><i class="fa fa-close"></i></button></form></td>
+      <td><form action="{% url 'tramiteviaje_eliminar' pk=item.id %}" method="post" class="form-eliminar">{% csrf_token %}<button type="submit" class="btn btn-xs btn-danger" data-toggle="tooltip" data-original-title="Eliminar"><i class="fa fa-close"></i></button></form></td>
     </tr>
     {% endfor %}
   </tbody>

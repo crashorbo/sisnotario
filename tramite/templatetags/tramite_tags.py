@@ -1,10 +1,30 @@
 from django import template
+import datetime
+from dateutil import relativedelta
 
 register = template.Library()
 
 @register.filter(name='concatstring')
 def concatstring(arg1, arg2):  
   return str(arg1) + str(arg2)
+
+@register.filter(name='edad')
+def edad(value):
+  hoy = datetime.datetime.today()
+  edad = hoy.year - value.year - ((hoy.month, hoy.day) < (value.month, value.day))
+
+  if edad > 0:
+    return str(edad)+' AÑOS'
+  else:
+    meses = relativedelta.relativedelta(hoy, value)
+    return str(meses.months)+' MESES'
+  return edad
+
+@register.filter(name='progenitor')
+def progenitor(value):  
+  if value:
+    return "Padre del menor"
+  return "Madre del menor"
 
 @register.filter(name='tipo_tramite')
 def tipo(value):
@@ -13,6 +33,16 @@ def tipo(value):
     2: 'AUTORIZACION DE VIAJE DE MENOR',
   }
   return TRAMITE_CHOICE[value]
+
+@register.filter(name='estado_civil')
+def estadocivil(value):
+  ESTADOCIVIL_CHOICE = {
+    1: 'SOLTERO(A)',
+    2: 'CASADO(A)',
+    3: 'VIUDO(A)',
+    4: 'DIVORCIADO(A)',
+  }
+  return ESTADOCIVIL_CHOICE[value]
 
 @register.filter(name='estado_tramite')
 def estado(value):

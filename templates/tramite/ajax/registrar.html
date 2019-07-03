@@ -15,7 +15,7 @@
 </div>
 {% endif %}
 <div class="modal-body">
-  <form id="form-tramite" class="form-material form-paciente" action="{% url "tramite-registrar" %}" method="post" novalidate>
+  <form id="form-tramite" action="{% url "tramite-registrar" %}" method="post" novalidate>
     {% csrf_token %}
     <div class="form-group">     
       {{ form.tipo_tramite }}

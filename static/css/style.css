@@ -7249,3 +7249,6 @@ input[type=checkbox]:not(:disabled).tabbed:focus ~ .lever::after {
       background-color: #ffffff; }
 
 /*# sourceMappingURL=style.css.map */
+.contenedor{
+  margin: 0 10px;
+}

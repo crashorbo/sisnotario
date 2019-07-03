@@ -1,15 +1,15 @@
  {% load tramite_tags %}
 
  <div class="row">
-  <div class="col-lg-5 col-xlg-4 col-md-6">
-    <div class="ribbon-wrapper card">
+  <div class="col-lg-5 col-xlg-4 col-md-6 p-r-0">
+    <div class="ribbon-wrapper card m-b-5">
       <div class="ribbon ribbon-primary">Datos del Tramite</div>
       <div class="row">
         <div class="col-md-12 text-center">
           <h6><strong>{{ tramite.tipo_tramite|tipo_tramite }}</strong></h6>
         </div>
       </div>
-      <form id="form-editar" action="" method="post" class="form-material">
+      <form id="form-editar" action="{% url "tramite-editar" pk=tramite.id %}" method="post">
         <div class="row">
           <div class="col-md-3">
             <small>Nro de Tramite</small>
@@ -21,7 +21,7 @@
           </div>
           <div class="col-md-3">
             <small>Hora</small>
-            <h6>{{ form.hora_registro }}</h6>
+            {{ form.hora_registro }}
           </div>
         </div>
         {% csrf_token %}
@@ -35,22 +35,18 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-4">
             <small>Fecha Documento:</small>
             {{ form.fecha_documento }}
           </div>
-          <div class="col-md-2">
-            <small>Paginas:</small>
-            <h5 class="text.center m-t-10">{{ paginas }}</h5>
+          <div class="col-md-8">
+            <small>Formularios:</small>
+            <div class="tags-default">{{ form.formularios }}</div>
           </div>
-          <div class="col-md-2">
-            <small>Desde:</small>
-            {{ form.pagina_inicio }}
-          </div>
-          <div class="col-md-2">
-            <small>Hasta:</small>            
-            {{ form.pagina_fin }}            
-          </div>
+          <div class="col-md-12">
+            <small>Parte:</small>
+            {{ form.parte_aux }}
+          </div>          
           <div class="col-md-12 m-t-10">
             <div class="text-right">
               {% if tramite.estado %}
@@ -63,7 +59,7 @@
         </div>
       </form>
     </div>
-    <div class="ribbon-wrapper card">
+    <div class="ribbon-wrapper card m-b-5 ">
       <div class="ribbon ribbon-primary">Firmante</div>
       <form id="form-tramitante" action="{% url 'tramitepersona-registrar' %}" method="post">
         {% csrf_token %}
@@ -76,13 +72,17 @@
           </div>
         </div>
         <div class="row m-t-20">          
-          <div class="col-md-6 text-center">
+          <div class="col-md-4 text-center">
             {{ formfirmante.testigo }}
             <label for="id_testigo">Testigo</label>
           </div>
-          <div class="col-md-6 text-center">
+          <div class="col-md-4 text-center">
             {{ formfirmante.firma }}
             <label for="id_firma">Firma</label>
+          </div>
+          <div class="col-md-4 text-center">
+            {{ formfirmante.contra_parte }}
+            <label for="id_contra_parte">Contra Parte</label>
           </div>
         </div>
         <div class="row m-t-20">
@@ -100,7 +100,7 @@
     <div class="ribbon-wrapper card">
       <div class="ribbon ribbon-primary">Lista de Firmantes</div>
       <div id="tramitantes">
-        <table class="table table-hover">
+        <table class="table table-sm table-hover">
           <thead>
             <tr>
               <th>Nombre</th>
