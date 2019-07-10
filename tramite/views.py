@@ -320,10 +320,10 @@ class ReportTramitePdf(View):
     i = 0
     while i < 4: 
       if fir[i] == None:
-        pdf.drawCentredString(165,725-i*32, "=======================")
-        pdf.drawCentredString(289,725-i*32, "===================")
-        pdf.drawCentredString(400,725-i*32, "==================")
-        pdf.drawCentredString(517,725-i*32, "============")   
+        pdf.drawCentredString(165,725-i*32, "&&&&&&&&&&&&&&&&&")
+        pdf.drawCentredString(289,725-i*32, "&&&&&&&&&&&&")
+        pdf.drawCentredString(400,725-i*32, "&&&&&&&&&&&&")
+        pdf.drawCentredString(517,725-i*32, "&&&&&&&&&")   
       else:
         pdf.drawCentredString(165,725-i*32, fir[i].persona.nombres)  
         pdf.drawCentredString(290,725-i*32, fir[i].persona.apellido_pat)
@@ -335,29 +335,29 @@ class ReportTramitePdf(View):
       pdf.setFont("Times-Roman", 50)
       pdf.drawCentredString(278,532, "X")
       pdf.setFont("Times-Roman", 10)
-      pdf.drawCentredString(177,520, "=======================")  
+      pdf.drawCentredString(177,520, "&&&&&&&&&&&&&&&&&")  
     if fir[1] == None:
       pdf.setFont("Times-Roman", 50)
       pdf.drawCentredString(502,532, "X")
       pdf.setFont("Times-Roman", 10)
-      pdf.drawCentredString(402,550, "=======================")  
+      pdf.drawCentredString(402,550, "&&&&&&&&&&&&&&&&&")  
     if fir[2] == None:
       pdf.setFont("Times-Roman", 50)
       pdf.drawCentredString(278,478, "X")
       pdf.setFont("Times-Roman", 10)
-      pdf.drawCentredString(177,500, "=======================")  
+      pdf.drawCentredString(177,500, "&&&&&&&&&&&&&&&&&")  
     if fir[3] == None:
       pdf.setFont("Times-Roman", 50)
       pdf.drawCentredString(502,478, "X")
       pdf.setFont("Times-Roman", 10)
-      pdf.drawCentredString(402,500, "=======================")  
+      pdf.drawCentredString(402,500, "&&&&&&&&&&&&&&&&&")  
     i = 0
     while i < 2: 
       if nfr[i] == None:
-        pdf.drawCentredString(162,410-i*32, "====================")  
-        pdf.drawCentredString(275,410-i*32, "==================")
-        pdf.drawCentredString(377,410-i*32, "=================")
-        pdf.drawCentredString(507,410-i*32, "=================")
+        pdf.drawCentredString(162,410-i*32, "&&&&&&&&&&&&&&&")  
+        pdf.drawCentredString(275,410-i*32, "&&&&&&&&&&&&")
+        pdf.drawCentredString(377,410-i*32, "&&&&&&&&&&&&")
+        pdf.drawCentredString(507,410-i*32, "&&&&&&&&&&&&")
       else:
         pdf.drawCentredString(162,410-i*32, nfr[i].persona.nombres)  
         pdf.drawCentredString(275,410-i*32, nfr[i].persona.apellido_pat)
@@ -378,9 +378,9 @@ class ReportTramitePdf(View):
     i = 0
     while i < 2:
       if tes[i] == None:
-        pdf.drawCentredString(208,260-i*32, "==========================")
-        pdf.drawCentredString(345,260-i*32, "===========")
-        pdf.drawCentredString(435,260-i*32, "===========")
+        pdf.drawCentredString(208,260-i*32, "&&&&&&&&&&&&&&&&&&&&")
+        pdf.drawCentredString(345,260-i*32, "&&&&&&&&&&&")
+        pdf.drawCentredString(435,260-i*32, "&&&&&&&&&&&")
         pdf.setFont("Times-Roman", 50)
         pdf.drawCentredString(520,250-i*55, "X")
         pdf.setFont("Times-Roman", 10)

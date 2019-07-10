@@ -14,74 +14,92 @@
 </div>
 {% endif %}
 <div class="modal-body">
-  <form id="form-persona" class="form-material form-paciente" action="{% url 'persona-editar' pk=persona.id %}" method="post" novalidate>
+  <form autocomplete="off" id="form-persona" action="{% url 'persona-editar' pk=persona.id %}" method="post" novalidate autocomplete="off">
     {% csrf_token %}
-    <div class="form-group">     
+    <div class="form-group m-0">
+        <small>Nombres</small>     
         {{ form.nombres }}
     </div>
     <div class="row">
-        <div class="col-md-6 form-group">        
+        <div class="col-md-6">
+            <small>Apellido Paterno</small>
             {{ form.apellido_pat }}
         </div>
-        <div class="col-md-6 form-group">        
+        <div class="col-md-6">        
+            <small>Apellido Materno</small>
             {{ form.apellido_mat }}
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-6">            
+        <div class="col-md-6">
+            <small>Numero Documento</small>         
             {{ form.nro_documento }}
         </div>
-        <div class="form-group col-md-6">            
+        <div class="col-md-6">            
+            <small>Expedido</small>
             {{ form.expedido }}
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="col-md-6">
+            <small>Estado Civil</small>
             {{ form.estado_civil }}
         </div>
-        <div class="form-group col-md-6">            
+        <div class="col-md-6">
+            <small>Genero</small>
             {{ form.genero }}
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="col-md-6">
+            <small>Fecha Nacimiento</small>
             {{ form.fecha_nacimiento }}
         </div>
-        <div class="form-group col-md-6">            
+        <div class="col-md-6">
+            <small>Nacionalidad</small>        
             {{ form.nacionalidad }}
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="col-md-6">
+            <small>Telefono</small>
             {{ form.telefono }}
         </div>
-        <div class="form-group col-md-6">            
+        <div class="col-md-6">
+            <small>Email</small>
             {{ form.email }}
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group m-0">
+        <small>Direccion</small>
         {{ form.direccion }}
     </div>
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="col-md-6">
+            <small>Natural</small>
             {{ form.natural }}
         </div>
-        <div class="form-group col-md-6">            
+        <div class="col-md-6">            
+            <small>Tipo</small>
             {{ form.tipo_persona }}
         </div>
     </div>
-    <div class="form-group tipo-persona hide">
+    <div class="tipo-persona hide">
+        <small>Razon Social</small>
         {{ form.razon_social }}
     </div>
     <div class="row ">
-        <div class="form-group col-md-6 tipo-persona hide">
+        <div class="col-md-6 tipo-persona hide">
+            <small>NIT</small>
             {{ form.nit }}
         </div>
-        <div class="form-group col-md-6 tipo-persona hide">       
+        <div class="col-md-6 tipo-persona hide">
+            <small>Fundempresa</small>       
             {{ form.fundempresa }}
         </div>
     </div>
-    <div class="form-group tipo-persona hide">
+    <div class="tipo-persona hide">
+        <small>Poder</small>
         {{ form.poder }}
     </div>
     <div class="modal-footer">
@@ -135,6 +153,17 @@
             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
           }
       })
+  });
+
+  $("#id_tipo_persona").on('change', function(e){
+      if($(this).val() == 0)
+      {
+          $('.tipo-persona').hide();
+      }
+      else 
+      {
+          $('.tipo-persona').show();  
+      }
   });
 
   $("input").keyup(function(e){
