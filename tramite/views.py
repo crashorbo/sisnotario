@@ -142,8 +142,6 @@ class TramiteEditar(UpdateView):
           auxp = auxp+',%s %s %s' % (item.persona.nombres, item.persona.apellido_pat, item.persona.apellido_mat)
         else:
           auxp = '%s %s %s' % (item.persona.nombres, item.persona.apellido_pat, item.persona.apellido_mat)
-      print(auxcp)
-      print(auxp)
     tramite.parte = auxp
     tramite.contra_parte = auxcp
     tramite.save()

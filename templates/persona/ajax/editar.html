@@ -14,7 +14,7 @@
 </div>
 {% endif %}
 <div class="modal-body">
-  <form autocomplete="off" id="form-persona" action="{% url 'persona-editar' pk=persona.id %}" method="post" novalidate autocomplete="off">
+  <form id="form-persona" action="{% url 'persona-editar' pk=persona.id %}" method="post">
     {% csrf_token %}
     <div class="form-group m-0">
         <small>Nombres</small>     

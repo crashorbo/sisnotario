@@ -120,3 +120,40 @@ class Numerotramite(models.Model):
   numero = models.IntegerField()
   gestion = models.IntegerField()
   tipo = models.IntegerField()
+
+
+class Tramiteback(models.Model):
+  TIPO_TRAMITE = (
+    (1, 'CERTIFICACION FIRMAS Y RUBRICAS'),
+    (2, 'AUTORIZACION DE VIAJE DE MENOR'),
+  )
+
+  TIPO_TRAMITE_PRINT = {
+    1: 'CERTIFICACION FIRMAS Y RUBRICAS',
+    2: 'AUTORIZACION DE VIAJE DE MENOR',
+  }
+
+  codigo = models.IntegerField(default=0)
+  tipo_tramite = models.IntegerField(choices=TIPO_TRAMITE, default=1, blank=False)
+  numero = models.IntegerField(default=0)
+  gestion = models.IntegerField(default=0)
+  titulo = models.CharField(blank=True, max_length=250)
+  fecha_documento = models.DateField(default=datetime.datetime.now)
+  fecha_registro = models.DateField(default=datetime.datetime.now)
+  hora_registro = models.TimeField(default=datetime.datetime.now)
+  fecha_actualizacion = models.DateTimeField(auto_now=True)
+  formularios = models.CharField(blank=True, max_length=250)
+  estado = models.BooleanField(default=False)
+
+class Tramitepersonaback(models.Model):
+  codigo = models.IntegerField(default=0)
+  tramite = models.IntegerField(default=0)
+  persona = models.IntegerField(default=0)
+  firma = models.BooleanField(default=True)
+  testigo = models.BooleanField(default=False)
+  tipo = models.IntegerField(default=0)
+  class Meta:
+    ordering = ('id', )
+
+  def __str__(self):
+    return self.id

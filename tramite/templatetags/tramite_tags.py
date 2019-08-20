@@ -139,15 +139,15 @@ def horareg(value):
 
 def titulouno(value):
   if len(value) > 59:
-    return value[0:58]
+    return value[0:60]
   return value
 
 def titulodos(value):
   if len(value) <= 59:
     return ''
   if len(value) > 108:
-    return value[58:108]
-  return value[58:len(value)-1]
+    return value[60:108]
+  return value[60:len(value)]
 
 def tramitantes(fi,nf,te):
   resultado = []
