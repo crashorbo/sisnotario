@@ -4,28 +4,34 @@ from tramite.models import Tramiteback, Tramitepersonaback, Tramite, Tramitepers
 from persona.models import Personaback, Persona
 
 def migrarTramites():
-    with open('csvpath/tramitesback.csv') as csvfile:
+    with open('csvpath/tramitebackf.csv') as csvfile:
         rowreader = csv.reader(csvfile, delimiter=';', quotechar='|')
         for row in rowreader:
             tramite = Tramiteback()
             tramite.codigo = row[0]
             tramite.tipo_tramite = row[1]
             tramite.numero = row[2]
-            tramite.titulo = row[3]
-            tramite.formularios = row[5]
+            tramite.gestion = row[3]
+            tramite.titulo = row[4]
+            tramite.fecha_documento = row[5]
             tramite.fecha_registro = row[6]
             tramite.hora_registro = row[7]
             tramite.fecha_actualizacion = row[8]
-            if row[9] == 't':
+            tramite.formularios = row[9]
+            tramite.parte = row[10]
+            tramite.parte_imp = row[11]
+            tramite.parte_aux = row[12]
+            tramite.contra_parte = row[13]
+            tramite.contra_parte_imp = row[14]
+            if row[15] == 't':
                 tramite.estado = True
             else:
                 tramite.estado = False
-            tramite.gestion = row[13]
-            tramite.fecha_documento = row[14]
+            
             tramite.save()
 
 def migrarTramitePersona():
-    with open('csvpath/tramitepersonaback.csv') as csvfile:
+    with open('csvpath/tramitepersonabackf.csv') as csvfile:
         rowreader = csv.reader(csvfile, delimiter=';', quotechar='|')
         for row in rowreader:
             tramite = Tramitepersonaback()
@@ -34,42 +40,46 @@ def migrarTramitePersona():
                 tramite.firma = True
             else:
                 tramite.firma = False
-            tramite.tipo = row[2]
-            tramite.persona = row[3]
-            tramite.tramite = row[4]
-            if row[5] == 't':
+            if row[2] == 't':
                 tramite.testigo = True
             else:
                 tramite.testigo = False
+            tramite.tipo = row[3]
+            if row[4] == 't':
+                tramite.contra_parte = True
+            else:
+                tramite.contra_parte = False    
+            tramite.persona = row[5]
+            tramite.tramite = row[6]
             tramite.save()
 
 def migrarPersona():
-    with open('csvpath/personaback.csv') as csvfile:
+    with open('csvpath/personabackf.csv') as csvfile:
         rowreader = csv.reader(csvfile, delimiter=';', quotechar='|')
         for row in rowreader:
             print(row[0])
             persona = Personaback()
             persona.codigo = row[0]
             persona.nombres = row[1]
-            persona.expedido = row[2]
-            persona.nro_documento = row[3]
-            persona.estado_civil = row[4]
-            persona.genero = row[5]
-            persona.nacionalidad = row[6]
-            persona.fecha_nacimiento = row[7]
-            persona.direccion = row[8]
-            persona.fecha_registro = row[9]
-            persona.fecha_actualizacion = row[10]
-            persona.natural = row[11]
-            persona.tipo_persona = row[12]
-            persona.fundempresa = row[13]
-            persona.nit = row[14]
-            persona.poder = row[15]
-            persona.razon_social = row[16]
-            persona.email = row[17]
-            persona.telefono = row[18]
-            persona.apellido_mat = row[19]
-            persona.apellido_pat = row[20]
+            persona.apellido_pat = row[2]
+            persona.apellido_mat = row[3]
+            persona.expedido = row[4]
+            persona.nro_documento = row[5]
+            persona.estado_civil = row[6]
+            persona.genero = row[7]
+            persona.nacionalidad = row[8]
+            persona.telefono = row[9]
+            persona.email = row[10]
+            persona.fecha_nacimiento = row[11]
+            persona.direccion = row[12]
+            persona.tipo_persona = row[13]
+            persona.natural = row[14]
+            persona.fecha_registro = row[15]
+            persona.fecha_actualizacion = row[16]
+            persona.razon_social = row[17]
+            persona.poder = row[18]
+            persona.nit = row[19]
+            persona.fundempresa = row[20]
             persona.save()
 
 def migrarBackup():
@@ -83,7 +93,8 @@ def migrarBackup():
             tramitepersonas_back = Tramitepersonaback.objects.filter(tramite=aux.codigo)
             tramite = Tramite(usuario=usuario, tipo_tramite=aux.tipo_tramite, numero=aux.numero, gestion=aux.gestion, titulo=aux.titulo,
             fecha_documento=aux.fecha_documento, fecha_registro=aux.fecha_registro, hora_registro=aux.hora_registro, fecha_actualizacion=aux.fecha_actualizacion, 
-            formularios=aux.formularios, estado=aux.estado)
+            formularios=aux.formularios, parte=aux.parte, parte_imp=aux.parte_imp, parte_aux=aux.parte_aux, contra_parte=aux.contra_parte, 
+            contra_parte_imp=aux.contra_parte_imp, estado=aux.estado, )
             tramite.save()
             print(aux.codigo)
             for tp in tramitepersonas_back:
@@ -100,6 +111,6 @@ def migrarBackup():
                     razon_social=persona_back.razon_social, poder=persona_back.poder, nit=persona_back.nit, fundempresa=persona_back.fundempresa)
                     persona.save()
                     print(persona.id, 'guardado')
-                tramite_persona = Tramitepersona(tramite=tramite, persona=persona, firma=tp.firma, testigo=tp.testigo, tipo=tp.tipo)
+                tramite_persona = Tramitepersona(tramite=tramite, persona=persona, firma=tp.firma, testigo=tp.testigo, tipo=tp.tipo, contra_parte=tp.contra_parte)
                 tramite_persona.save()
                 print(persona_back.codigo)

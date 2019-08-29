@@ -144,6 +144,11 @@ class Tramiteback(models.Model):
   hora_registro = models.TimeField(default=datetime.datetime.now)
   fecha_actualizacion = models.DateTimeField(auto_now=True)
   formularios = models.CharField(blank=True, max_length=250)
+  parte = models.TextField(blank=True)
+  parte_imp = models.CharField(blank=True, max_length=200)
+  parte_aux = models.CharField(blank=True, max_length=200)
+  contra_parte = models.TextField(blank=True)
+  contra_parte_imp = models.CharField(blank=True, max_length=200)
   estado = models.BooleanField(default=False)
 
 class Tramitepersonaback(models.Model):
@@ -153,6 +158,7 @@ class Tramitepersonaback(models.Model):
   firma = models.BooleanField(default=True)
   testigo = models.BooleanField(default=False)
   tipo = models.IntegerField(default=0)
+  contra_parte = models.BooleanField(default=True)
   class Meta:
     ordering = ('id', )
 
