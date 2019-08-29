@@ -19,27 +19,16 @@
             <th>Nro Documento</th>
             <th>Expedido</th>
             <th>Telefono</th>
-            <th>Acciones</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          {% for persona in personas %}
-            <tr>
-              <td>{{ persona.nombres|add:" "|add:persona.apellido_pat|add:" "|add:persona.apellido_mat }}</td>
-              <td>{{ persona.nro_documento}}</td>
-              <td>{{ persona.expedido }}</td>
-              <td>{{ persona.nacionalidad }}</td>
-              <td class="text-right">
-                  <button data-url={% url 'persona-editar' pk=persona.id %} class="btn editar-persona btn-simple btn-warning btn-xs"><i class="fa fa-edit"></i></button>
-              </td>
-            </tr>
-          {% endfor %}
+          
         </tbody>
       </table>
     </div>
   </div>
 </div>
-
 {% endblock %}
 
 {% block js %}

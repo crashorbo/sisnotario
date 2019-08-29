@@ -23,8 +23,11 @@ $(document).ready(function(){
         "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
       }
-    }
+    },
+    "bServerSide": true,
+    "sAjaxSource": "/persona/as_json"
   });
+
   $("#registro-paciente").click(function(){
     $.ajax({
       url: 'registrar',
@@ -35,6 +38,18 @@ $(document).ready(function(){
     })
   });
   
+  $("#myTable").on('click', '.editar-persona', function(){
+    var thisurl = $(this).attr('data-url');
+    $.ajax({
+      url: thisurl,
+      type: 'get',  
+      success: function(data){
+          $('#contenido-modal').html(data);
+          $('#responsive-modal').modal('show');
+      }
+    })
+  });
+
   $(".editar-persona").click(function(){
     var thisurl = $(this).attr('data-url');
     $.ajax({

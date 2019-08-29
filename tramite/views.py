@@ -26,12 +26,13 @@ class TableAsJSON(JSONResponseMixin, View):
   def get(self, request, *args, **kwargs):
     col_name_map = {
       '0': 'numero',
-      '1': 'tipo_tramite',
-      '2': 'estado',
-      '3': 'titulo',
-      '4': 'parte',
-      '5': 'contra_parte',
-      '6': 'acciones',
+      '1': 'fecha',
+      '2': 'tipo_tramite',
+      '3': 'estado',
+      '4': 'titulo',
+      '5': 'parte',
+      '6': 'contra_parte',
+      '7': ''
     }
     object_list = self.model.objects.all()
     search_text = request.GET.get('sSearch', '').lower()

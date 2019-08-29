@@ -100,7 +100,6 @@ def migrarBackup():
                     razon_social=persona_back.razon_social, poder=persona_back.poder, nit=persona_back.nit, fundempresa=persona_back.fundempresa)
                     persona.save()
                     print(persona.id, 'guardado')
-                    tramite_persona = Tramitepersona(tramite=tramite, persona=persona, firma=tp.firma, testigo=tp.testigo, tipo=tp.tipo)
-                    tramite_persona.save()
-                    print(persona_back.codigo)
-        break
+                tramite_persona = Tramitepersona(tramite=tramite, persona=persona, firma=tp.firma, testigo=tp.testigo, tipo=tp.tipo)
+                tramite_persona.save()
+                print(persona_back.codigo)

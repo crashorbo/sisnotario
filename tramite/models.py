@@ -10,7 +10,7 @@ from persona.models import Persona
 class MyModelMixin(object):
 
   def q_for_search_word(self, word):
-    return Q(numero__icontains=word) | Q(parte__icontains=word) | Q(contra_parte__icontains=word) | Q(titulo__icontains=word)
+    return Q(numero__icontains=word) | Q(fecha_registro__icontains=word)| Q(parte__icontains=word) | Q(contra_parte__icontains=word) | Q(titulo__icontains=word)
 
   def q_for_search(self, search):
     q = Q()
@@ -34,7 +34,6 @@ class MyModelManager(models.Manager, MyModelMixin):
 class Tramite(models.Model):
   TIPO_TRAMITE = (
     (1, 'CERTIFICACION FIRMAS Y RUBRICAS'),
-    (2, 'AUTORIZACION DE VIAJE DE MENOR'),
   )
 
   TIPO_TRAMITE_PRINT = {
@@ -66,12 +65,14 @@ class Tramite(models.Model):
 
   def as_list(self):
     return [self.numero,
+      self.fecha_registro.strftime("%d/%m/%Y"),
       self.TIPO_TRAMITE_PRINT[self.tipo_tramite],
       '<span class="label '+self.estadoclass()+'">'+self.estadotext()+'</span>',
       self.titulo,
       self.parte,
       self.contra_parte,
-      '<a href="/tramite/'+str(self.id)+'/editar" data-toggle="tooltip" data-original-title="Editar"><i class="fa fa-pencil text-inverse m-r-10"></i></a>']
+      '<a href="/tramite/'+str(self.id)+'/editar" data-toggle="tooltip" data-original-title="Editar"><i class="fa fa-pencil text-inverse m-r-10"></i></a>',
+      ]
 
   def estadoclass(self):
     if(self.estado):

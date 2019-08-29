@@ -7252,3 +7252,9 @@ input[type=checkbox]:not(:disabled).tabbed:focus ~ .lever::after {
 .contenedor{
   margin: 0 10px;
 }
+.inputdanger{
+  border-color: #ffb22b !important;
+}
+.inputsuccess{
+  border-color: #26c6da !important;
+}

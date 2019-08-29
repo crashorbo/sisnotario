@@ -16,90 +16,90 @@
 <div class="modal-body">
   <form id="form-persona" action="{% url "persona_registrar" %}" method="post">
     {% csrf_token %}
+    <div class="row">
+        <div class="col-md-6">
+            <small><strong>Numero Documento</strong></small>         
+            {{ form.nro_documento }}
+        </div>
+        <div class="col-md-6">            
+            <small><strong>Expedido</strong></small>
+            {{ form.expedido }}
+        </div>
+    </div>
     <div class="form-group m-0">
-        <small>Nombres</small>     
+        <small><strong>Nombres</strong></small>     
         {{ form.nombres }}
     </div>
     <div class="row">
         <div class="col-md-6">
-            <small>Apellido Paterno</small>
+            <small><strong>Apellido Paterno</strong></small>
             {{ form.apellido_pat }}
         </div>
         <div class="col-md-6">        
-            <small>Apellido Materno</small>
+            <small><strong>Apellido Materno</strong></small>
             {{ form.apellido_mat }}
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <small>Numero Documento</small>         
-            {{ form.nro_documento }}
-        </div>
-        <div class="col-md-6">            
-            <small>Expedido</small>
-            {{ form.expedido }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <small>Estado Civil</small>
+            <small><strong>Estado Civil</strong></small>
             {{ form.estado_civil }}
         </div>
         <div class="col-md-6">
-            <small>Genero</small>
+            <small><strong>Genero</strong></small>
             {{ form.genero }}
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <small>Fecha Nacimiento</small>
+            <small><strong>Fecha de Nacimiento</strong></small>
             {{ form.fecha_nacimiento }}
         </div>
         <div class="col-md-6">
-            <small>Nacionalidad</small>        
+            <small><strong>Nacionalidad</strong></small>        
             {{ form.nacionalidad }}
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <small>Telefono</small>
+            <small><strong>Telefono</strong></small>
             {{ form.telefono }}
         </div>
         <div class="col-md-6">
-            <small>Email</small>
+            <small><strong>Email</strong></small>
             {{ form.email }}
         </div>
     </div>
     <div class="form-group m-0">
-        <small>Direccion</small>
+        <small><strong>Direccion</strong></small>
         {{ form.direccion }}
     </div>
     <div class="row">
         <div class="col-md-6">
-            <small>Natural</small>
+            <small><strong>Natural</strong></small>
             {{ form.natural }}
         </div>
         <div class="col-md-6">            
-            <small>Tipo</small>
+            <small><strong>Tipo</strong></small>
             {{ form.tipo_persona }}
         </div>
     </div>
     <div class="tipo-persona hide">
-        <small>Razon Social</small>
+        <small><strong>Razon Social</strong></small>
         {{ form.razon_social }}
     </div>
     <div class="row ">
         <div class="col-md-6 tipo-persona hide">
-            <small>NIT</small>
+            <small><strong>NIT</strong></small>
             {{ form.nit }}
         </div>
         <div class="col-md-6 tipo-persona hide">
-            <small>Fundempresa</small>       
+            <small><strong>Fundempresa</strong></small>       
             {{ form.fundempresa }}
         </div>
     </div>
     <div class="tipo-persona hide">
-        <small>Poder</small>
+        <small><strong>Poder</strong></small>
         {{ form.poder }}
     </div>
     <div class="modal-footer">
@@ -172,4 +172,38 @@
   $("textarea").keyup(function(e){
       this.value = this.value.toUpperCase();
   });
+  function verificar(n,e){
+    $.ajax({
+        method: 'get',
+        url: '/persona/verificar',
+        data: {'n': n, 'e': e},
+        success: function(data){
+            if(data.success){
+                console.log('existe')
+                $('#id_nro_documento').removeClass("inputsuccess");
+                $('#id_expedido').removeClass("inputsuccess");
+                $('#id_nro_documento').addClass("inputdanger");
+                $('#id_expedido').addClass("inputdanger");
+            }
+            else{
+                console.log('no existe')
+                $('#id_nro_documento').removeClass("inputdanger");
+                $('#id_expedido').removeClass("inputdanger");
+            }
+        },
+        error: function(xhr,errmsg,err) {
+        // Show an error
+        $('#results').html("<div class='alert-box alert radius' data-alert>"+
+        "Oops! We have encountered an error. <a href='#' class='close'>&times;</a></div>"); // add error to the dom
+        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+  }
+  $('#id_nro_documento').on('keyup', function(){
+      verificar($(this).val(),$('#id_expedido').val())
+  });
+  $('#id_expedido').on('change', function(){
+      
+      verificar($('#id_nro_documento').val(),$(this).val())
+  })
 </script>

@@ -17,14 +17,17 @@
 <div class="modal-body">
   <form id="form-tramite" action="{% url "tramite-registrar" %}" method="post" novalidate>
     {% csrf_token %}
-    <div class="form-group">     
+    <div class="col-md-12">
+      <small><strong>Tipo de Tramite</strong></small>     
       {{ form.tipo_tramite }}
     </div>
     <div id="tipouno">
-      <div class="form-group">
+      <div class="col-md-12">
+        <small><strong>Objeto</strong></small>
         {{ form.titulo }}
       </div>
-      <div class="form-group">
+      <div class="col-md-12">
+        <small><strong>Fecha del Documento</strong></small>
         {{ form.fecha_documento }}
       </div>
       <div class="hide">

@@ -1,6 +1,32 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
+from django.db.models import Q
+from django.db.models.query import QuerySet
+
+class MyModelMixin(object):
+
+  def q_for_search_word(self, word):
+    return Q(nombres__icontains=word) | Q(apellido_pat__icontains=word)| Q(apellido_mat__icontains=word) | Q(nro_documento__icontains=word) | Q(expedido__icontains=word)
+
+  def q_for_search(self, search):
+    q = Q()
+    if search:
+        searches = search.split()
+        for word in searches:
+            q = q & self.q_for_search_word(word)
+    return q
+
+  def filter_on_search(self, search):
+    return self.filter(self.q_for_search(search))
+
+class MyModelQuerySet(QuerySet, MyModelMixin):
+  pass
+
+class MyModelManager(models.Manager, MyModelMixin):
+  
+  def get_queryset(self):
+    return MyModelQuerySet(self.model, using=self._db)
 
 class Persona(models.Model):
 
@@ -20,6 +46,18 @@ class Persona(models.Model):
     (8, 'BENI'),
     (9, 'PANDO'),
   )
+
+  EXPEDIDO_PRINT = {
+    1: 'ORURO',
+    2: 'LA PAZ',
+    3: 'COCHABAMBA',
+    4: 'SANTA CRUZ',
+    5: 'CHUQUISACA',
+    6: 'POTOSI',
+    7: 'TARIJA',
+    8: 'BENI',
+    9: 'PANDO',
+  }
 
   ESTADO_CIVIL = (
     (1, 'SOLTERO(A)'),
@@ -52,8 +90,19 @@ class Persona(models.Model):
   nit = models.CharField(max_length=20, default='', blank=True)
   fundempresa = models.CharField(max_length=20, default='', blank=True)
 
+  objects = MyModelManager()
+
   def __str__(self):
     return self.nombres + ' ' + self.apellido_pat + ' ' +self.apellido_mat + ' - ' + self.nro_documento
+
+  def as_list(self):
+    return [self.nombres + ' ' + self.apellido_pat + ' ' +self.apellido_mat,
+      self.nro_documento,
+      self.EXPEDIDO_PRINT[self.expedido],
+      self.telefono,
+      '<button data-url="/persona/'+str(self.id)+'/editar" class="btn editar-persona btn-simple btn-warning btn-xs"><i class="fa fa-edit"></i></button>'
+      ]
+
 
 class Personaback(models.Model):
 
