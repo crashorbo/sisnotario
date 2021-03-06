@@ -36,6 +36,7 @@ class Persona(models.Model):
   )
 
   EXPEDIDO_CHOICES = (
+    (0, ''),
     (1, 'ORURO'),
     (2, 'LA PAZ'),
     (3, 'COCHABAMBA'),
@@ -48,6 +49,7 @@ class Persona(models.Model):
   )
 
   EXPEDIDO_PRINT = {
+    0: '',
     1: 'ORURO',
     2: 'LA PAZ',
     3: 'COCHABAMBA',
@@ -72,7 +74,7 @@ class Persona(models.Model):
   nombres = models.CharField(max_length=100)
   apellido_pat = models.CharField(max_length=100, blank=True)
   apellido_mat = models.CharField(max_length=100, blank=True)
-  expedido = models.IntegerField(default=1, choices=EXPEDIDO_CHOICES)
+  expedido = models.IntegerField(default=0, choices=EXPEDIDO_CHOICES)
   nro_documento = models.CharField(max_length=50, unique=True)
   estado_civil = models.IntegerField(default=1, choices=ESTADO_CIVIL)
   genero = models.IntegerField(default=1, choices=GENERO_CHOICES)

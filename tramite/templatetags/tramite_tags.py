@@ -63,6 +63,7 @@ def firma(value):
 @register.filter(name='expedido')
 def expedido(value):
   EXPEDIDO_CHOICE = {
+    0: '',
     1: 'OR',
     2: 'LP',
     3: 'CB',

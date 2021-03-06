@@ -294,100 +294,104 @@ class ReportTramitePdf(View):
 
   def cabecera(self,pdf):
     #Establecemos el tamaño de letra en 16 y el tipo de letra Helvetica
-    pdf.setFont("Times-Bold", 16)
+    pdf.setFont("Helvetica-Bold", 16)
     #Dibujamos una cadena en la ubicación X,Y especificada
-    pdf.drawString(260, 860, str(self.tramite.numero)+'/'+str(self.tramite.gestion))
-    pdf.setFont("Times-Roman", 10)
-    pdf.drawString(325, 860, '('+tramite_literal.main(self.tramite.numero)+')')
-    pdf.drawString(205, 845, tramite_tags.titulouno(self.tramite.titulo))
-    pdf.drawString(100, 830, tramite_tags.titulodos(self.tramite.titulo))
-    pdf.drawString(425, 830, tramite_tags.fechaupper(self.tramite.fecha_documento))
-    pdf.drawString(200, 800, u"ORURO")
-    pdf.drawString(480, 800, tramite_tags.horareg(self.tramite.hora_registro))
-    pdf.drawString(115, 785, tramite_tags.diaupper(self.tramite.fecha_registro.strftime("%A"))+' '+tramite_literal.main(self.tramite.fecha_registro.day))
-    pdf.drawString(270, 785, tramite_tags.mesupper(self.tramite.fecha_registro.month))
-    pdf.drawString(380, 785, tramite_literal.main(self.tramite.fecha_registro.year))
-    pdf.drawString(280, 765, "(4) CUATRO")
-    pdf.drawString(460, 765, "ORURO")
-    pdf.drawString(240, 745, "WILLIAM DELGADO TOLEDO.-")
+    pdf.drawString(275, 868, str(self.tramite.numero)+'/'+str(self.tramite.gestion))
+    pdf.setFont("Helvetica", 9)
+    pdf.drawString(345, 868, '('+tramite_literal.main(self.tramite.numero)+')')
+
+    pdf.drawString(220, 852, tramite_tags.titulouno(self.tramite.titulo))
+    pdf.drawString(110, 837, tramite_tags.titulodos(self.tramite.titulo))
+    pdf.drawString(443, 837, tramite_tags.fechaupper(self.tramite.fecha_documento))
+
+    pdf.drawString(200, 810, "ORURO")
+    pdf.drawString(503, 810, tramite_tags.horareg(self.tramite.hora_registro))
+
+    pdf.drawCentredString(157, 790, tramite_tags.diaupper(self.tramite.fecha_registro.strftime("%A"))+' '+tramite_literal.main(self.tramite.fecha_registro.day))
+    pdf.drawCentredString(335, 790, tramite_tags.mesupper(self.tramite.fecha_registro.month))
+    pdf.drawCentredString(483, 790, tramite_literal.main(self.tramite.fecha_registro.year))
+
+    pdf.drawString(290, 772, "(4) CUATRO")
+    pdf.drawString(485, 772, "ORURO")
+    pdf.drawString(240, 754, "WILLIAM DELGADO TOLEDO.-")
 
   def firmantes(self, pdf):
-    pdf.setFont("Times-Roman", 10)
+    pdf.setFont("Helvetica", 9)
     fir = self.resaux[0]
     nfr = self.resaux[1]
     tes = self.resaux[2]
     i = 0
     while i < 4: 
       if fir[i] == None:
-        pdf.drawCentredString(165,725-i*32, "&&&&&&&&&&&&&&&&&")
-        pdf.drawCentredString(289,725-i*32, "&&&&&&&&&&&&")
-        pdf.drawCentredString(400,725-i*32, "&&&&&&&&&&&&")
-        pdf.drawCentredString(517,725-i*32, "&&&&&&&&&")   
+        pdf.drawCentredString(158,730-i*32, "&&&&&&&&&&&&&&&&&")
+        pdf.drawCentredString(289,730-i*32, "&&&&&&&&&&&&")
+        pdf.drawCentredString(405,730-i*32, "&&&&&&&&&&&&")
+        pdf.drawCentredString(527,730-i*32, "&&&&&&&&&")   
       else:
-        pdf.drawCentredString(165,725-i*32, fir[i].persona.nombres)  
-        pdf.drawCentredString(290,725-i*32, fir[i].persona.apellido_pat)
-        pdf.drawCentredString(400,725-i*32, fir[i].persona.apellido_mat)
-        pdf.drawCentredString(517,725-i*32, fir[i].persona.nro_documento + ' '+ tramite_tags.expedido(fir[i].persona.expedido))
+        pdf.drawCentredString(158,730-i*32, fir[i].persona.nombres)  
+        pdf.drawCentredString(290,730-i*32, fir[i].persona.apellido_pat)
+        pdf.drawCentredString(405,730-i*32, fir[i].persona.apellido_mat)
+        pdf.drawCentredString(527,730-i*32, fir[i].persona.nro_documento + ' '+ tramite_tags.expedido(fir[i].persona.expedido))
       i = i + 1
     
     if fir[0] == None:
-      pdf.setFont("Times-Roman", 50)
-      pdf.drawCentredString(278,532, "X")
-      pdf.setFont("Times-Roman", 10)
-      pdf.drawCentredString(177,520, "&&&&&&&&&&&&&&&&&")  
+      pdf.setFont("Helvetica", 50)
+      pdf.drawCentredString(268,538, "X")
+      pdf.setFont("Helvetica", 9)
+      pdf.drawCentredString(170,554, "&&&&&&&&&&&&&&&&&")  
     if fir[1] == None:
-      pdf.setFont("Times-Roman", 50)
-      pdf.drawCentredString(502,532, "X")
-      pdf.setFont("Times-Roman", 10)
-      pdf.drawCentredString(402,550, "&&&&&&&&&&&&&&&&&")  
+      pdf.setFont("Helvetica", 50)
+      pdf.drawCentredString(520,538, "X")
+      pdf.setFont("Helvetica", 9)
+      pdf.drawCentredString(425,554, "&&&&&&&&&&&&&&&&&")  
     if fir[2] == None:
-      pdf.setFont("Times-Roman", 50)
-      pdf.drawCentredString(278,478, "X")
-      pdf.setFont("Times-Roman", 10)
-      pdf.drawCentredString(177,500, "&&&&&&&&&&&&&&&&&")  
+      pdf.setFont("Helvetica", 50)
+      pdf.drawCentredString(268,482, "X")
+      pdf.setFont("Helvetica", 9)
+      pdf.drawCentredString(170,498, "&&&&&&&&&&&&&&&&&")  
     if fir[3] == None:
-      pdf.setFont("Times-Roman", 50)
-      pdf.drawCentredString(502,478, "X")
-      pdf.setFont("Times-Roman", 10)
-      pdf.drawCentredString(402,500, "&&&&&&&&&&&&&&&&&")  
+      pdf.setFont("Helvetica", 50)
+      pdf.drawCentredString(520,482, "X")
+      pdf.setFont("Helvetica", 9)
+      pdf.drawCentredString(425,498, "&&&&&&&&&&&&&&&&&")  
     i = 0
     while i < 2: 
       if nfr[i] == None:
-        pdf.drawCentredString(162,410-i*32, "&&&&&&&&&&&&&&&")  
-        pdf.drawCentredString(275,410-i*32, "&&&&&&&&&&&&")
-        pdf.drawCentredString(377,410-i*32, "&&&&&&&&&&&&")
-        pdf.drawCentredString(507,410-i*32, "&&&&&&&&&&&&")
+        pdf.drawCentredString(160,422-i*32, "&&&&&&&&&&&&&&&&&&")  
+        pdf.drawCentredString(285,422-i*32, "&&&&&&&&&&&&&&")
+        pdf.drawCentredString(402,422-i*32, "&&&&&&&&&&&&&&")
+        pdf.drawCentredString(530,422-i*32, "&&&&&&&&&&&&")
       else:
-        pdf.drawCentredString(162,410-i*32, nfr[i].persona.nombres)  
-        pdf.drawCentredString(275,410-i*32, nfr[i].persona.apellido_pat)
-        pdf.drawCentredString(377,410-i*32, nfr[i].persona.apellido_mat)
-        pdf.drawCentredString(507,410-i*32, nfr[i].persona.nro_documento + ' '+ tramite_tags.expedido(nfr[i].persona.expedido))
+        pdf.drawCentredString(160,422-i*32, nfr[i].persona.nombres)  
+        pdf.drawCentredString(280,422-i*32, nfr[i].persona.apellido_pat)
+        pdf.drawCentredString(402,422-i*32, nfr[i].persona.apellido_mat)
+        pdf.drawCentredString(530,422-i*32, nfr[i].persona.nro_documento + ' '+ tramite_tags.expedido(nfr[i].persona.expedido))
       i = i + 1
     if nfr[0] == None:
-      pdf.setFont("Times-Roman", 50)
-      pdf.drawCentredString(195,297, "X")
-      pdf.drawCentredString(258,297, "X")
-      pdf.setFont("Times-Roman", 10)
+      pdf.setFont("Helvetica", 50)
+      pdf.drawCentredString(210,310, "X")
+      pdf.drawCentredString(275,310, "X")
+      pdf.setFont("Helvetica", 9)
     if nfr[1] == None:
-      pdf.setFont("Times-Roman", 50)
-      pdf.drawCentredString(375,297, "X")
-      pdf.drawCentredString(440,297, "X")
-      pdf.setFont("Times-Roman", 10)
+      pdf.setFont("Helvetica", 50)
+      pdf.drawCentredString(385,310, "X")
+      pdf.drawCentredString(450,310, "X")
+      pdf.setFont("Helvetica", 9)
     
     i = 0
     while i < 2:
       if tes[i] == None:
-        pdf.drawCentredString(208,260-i*32, "&&&&&&&&&&&&&&&&&&&&")
-        pdf.drawCentredString(345,260-i*32, "&&&&&&&&&&&")
-        pdf.drawCentredString(435,260-i*32, "&&&&&&&&&&&")
-        pdf.setFont("Times-Roman", 50)
-        pdf.drawCentredString(520,250-i*55, "X")
-        pdf.setFont("Times-Roman", 10)
+        pdf.drawCentredString(208,264-i*53, "&&&&&&&&&&&&&&&&&&&&&&")
+        pdf.drawCentredString(353,264-i*53, "&&&&&&&&&&&")
+        pdf.drawCentredString(453,264-i*53, "&&&&&&&&&&&")
+        pdf.setFont("Helvetica", 50)
+        pdf.drawCentredString(535,250-i*53, "X")
+        pdf.setFont("Helvetica", 9)
       else:
-        pdf.setFont("Times-Roman", 8)
-        pdf.drawCentredString(208,260-i*32, tes[i].persona.nombres+' '+tes[i].persona.apellido_pat+' '+tes[i].persona.apellido_mat)
-        pdf.drawCentredString(345,260-i*32, tes[i].persona.nro_documento+ ' '+tramite_tags.expedido(tes[i].persona.expedido))
-        pdf.setFont("Times-Roman", 10)
+        pdf.setFont("Helvetica", 8)
+        pdf.drawCentredString(208,264-i*53, tes[i].persona.nombres+' '+tes[i].persona.apellido_pat+' '+tes[i].persona.apellido_mat)
+        pdf.drawCentredString(353,264-i*53, tes[i].persona.nro_documento+ ' '+tramite_tags.expedido(tes[i].persona.expedido))
+        pdf.setFont("Helvetica", 9)
       i = i + 1
 
     qrw = QrCodeWidget('NOTARIA DE FE PUBLICA N4|'+(str(self.tramite.numero) + '|' + str(self.tramite.gestion)).upper()+'|CFYR'+'|ORURO|BOLIVIA')
@@ -396,7 +400,7 @@ class ReportTramitePdf(View):
     h=b[3]-b[1] 
     d = Drawing(50,50,transform=[50./w,0,0,50./h,0,0]) 
     d.add(qrw)
-    renderPDF.draw(d, pdf, 100, 140)
+    renderPDF.draw(d, pdf, 120, 120)
 
   def get(self, request, *args, **kwargs):
     self.tramite = Tramite.objects.get(pk=kwargs.get('id', "any_default"))
