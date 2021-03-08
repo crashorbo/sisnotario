@@ -300,7 +300,7 @@ class ReportTramitePdf(View):
     pdf.setFont("Helvetica", 9)
     pdf.drawString(350, 868, '('+tramite_literal.main(self.tramite.numero)+')')
 
-    pdf.drawString(220, 852, tramite_tags.titulouno(self.tramite.titulo))
+    pdf.drawString(225, 852, tramite_tags.titulouno(self.tramite.titulo))
     pdf.drawString(110, 837, tramite_tags.titulodos(self.tramite.titulo))
     pdf.drawString(443, 837, tramite_tags.fechaupper(self.tramite.fecha_documento))
 
