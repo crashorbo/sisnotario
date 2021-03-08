@@ -296,9 +296,9 @@ class ReportTramitePdf(View):
     #Establecemos el tamaño de letra en 16 y el tipo de letra Helvetica
     pdf.setFont("Helvetica-Bold", 16)
     #Dibujamos una cadena en la ubicación X,Y especificada
-    pdf.drawString(275, 868, str(self.tramite.numero)+'/'+str(self.tramite.gestion))
+    pdf.drawString(280, 868, str(self.tramite.numero)+'/'+str(self.tramite.gestion))
     pdf.setFont("Helvetica", 9)
-    pdf.drawString(345, 868, '('+tramite_literal.main(self.tramite.numero)+')')
+    pdf.drawString(350, 868, '('+tramite_literal.main(self.tramite.numero)+')')
 
     pdf.drawString(220, 852, tramite_tags.titulouno(self.tramite.titulo))
     pdf.drawString(110, 837, tramite_tags.titulodos(self.tramite.titulo))
